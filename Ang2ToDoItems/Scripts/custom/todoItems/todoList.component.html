@@ -1,0 +1,43 @@
+﻿<div class="loading-mask" [hidden]="!loading"></div>
+
+<div class="row">
+    <div class="text-right">
+        <a class="btn btn-success" (click)="addNewToDoItem()">
+            Создать
+            <i class="glyphicon glyphicon-plus"></i>
+        </a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Наименование</th>
+                <th>Категория</th>
+                <th>Комментарий</th>
+                <th style="width:10%">Статус</th>
+                <th style="width:10%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of toDoItems">
+                <td>{{item.Id}}</td>
+                <td>{{item.Name}}</td>
+                <td>{{item.Category.Name}}</td>
+                <td>{{item.Comment}}</td>
+                <td>{{item.Status}}</td>
+                <td>
+                    <a class="btn btn-primary" (click)="editToDoItem(item)">
+                        Изменить
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="text-center">
+        <pagination [totalItems]="totalItems" [(ngModel)]="curPage" [itemsPerPage]="5" (pageChanged)="pageChanged($event)"
+        nextText="Вперёд" previousText="Назад" firstText="В начало" lastText="В конец"
+        maxSize="2" [boundaryLinks]="false" [rotate]="false"></pagination>
+    </div>
+</div>

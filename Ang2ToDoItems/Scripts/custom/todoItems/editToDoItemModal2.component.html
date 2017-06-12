@@ -1,0 +1,42 @@
+﻿<div class="modal-dialog">
+    <form class="modal-content" #form="ngForm">
+        <div class="modal-header">
+            <button type="button" class="close" (click)="close()">&times;</button>
+            <h4 class="modal-title">Задание</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="control-label">Name</label>
+                <input type="text" class="form-control" name="name" [(ngModel)]="todoItem.Name" required #name="ngModel"/>
+            </div>
+
+            <div class="form-group">
+                <label>Comment</label>
+                <textarea class="form-control" name="comment" [(ngModel)]="todoItem.Comment" maxlength="10" #comment="ngModel"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Category</label>
+                <select class="form-control" name="category" [(ngModel)]="todoItem.Category">
+                    <option *ngFor="let item of categories" [ngValue]="item">
+                        {{item.Name}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Status</label>
+                <select class="form-control" name="status" [(ngModel)]="todoItem.Status">
+                    <option *ngFor="let item of statuses" [value]="item">
+                        {{item}}
+                    </option>
+                </select>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" [disabled]="!form.valid" (click)="saveClicked(form)">OK</button>
+            <button type="button" class="btn btn-default" (click)="close()">Cancel</button>
+        </div>
+    </form>
+</div>

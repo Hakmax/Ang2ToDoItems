@@ -1,0 +1,38 @@
+﻿@model Ang2ToDoItems.Models.LoginModel
+@{
+    ViewBag.Title = "LogIn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Login</h2>
+
+<div class="form-horizontal">
+    @using (Html.BeginForm("LogIn", "Account"))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+        <div class="form-group">
+
+            <label class="control-label">Email:</label>
+            @Html.EditorFor(x=>x.Email,new { htmlAttributes= new { @class="form-control"}})
+        </div>
+        <div class="form-group">
+            <label class="control-label">Password:</label>
+            @Html.EditorFor(x => x.Password, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Log in" class="btn btn-default"/>
+        </div>
+    }
+</div>
+
+<div class="form-horizontal">
+    @using (Html.BeginForm("LogOut", "Account"))
+    {
+        <div class="form-group">
+            <input type="submit" value="Log out" class="btn btn-default" />
+        </div>
+    }
+</div>
+

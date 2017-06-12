@@ -1,0 +1,33 @@
+﻿<div class="loading-mask" [hidden]="!loading"></div>
+<div class="text-right">
+    <a class="btn btn-success" (click)="showCreateCategoryModal()">
+        Создать категорию
+        <i class="glyphicon glyphicon-plus"></i>
+    </a>
+    <br/>
+    usr:{{userInfo|json}}
+</div>
+<div class="row">
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width:8%">Id</th>
+                <th>Наименование</th>
+                <th style="width:10%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of categories">
+                <td>{{item.Id}}</td>
+                <td>{{item.Name}}</td>
+                <td>
+                    <a class="btn btn-primary" (click)="editCategory(item)">
+                        Изменить
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
