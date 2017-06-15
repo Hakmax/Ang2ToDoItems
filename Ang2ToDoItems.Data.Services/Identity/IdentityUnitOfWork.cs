@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Ang2ToDoItems.Data.Services.Identity
 {
-    public class IdentityUnitOfWork : IUnitOfWork
+    public class IdentityUnitOfWork// : IUnitOfWork
     {
         private Ang2ToDoItemsDbContext _dataBase;
         private ApplicationUserManager _userManager;
@@ -18,7 +18,7 @@ namespace Ang2ToDoItems.Data.Services.Identity
         public IdentityUnitOfWork()
         {
             _dataBase = new Ang2ToDoItemsDbContext();
-            _userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(_dataBase));
+            //_userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(_dataBase));
             _roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(_dataBase));
             _clientManager = new ClientManager(_dataBase);
         }

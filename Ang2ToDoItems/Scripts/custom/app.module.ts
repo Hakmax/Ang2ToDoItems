@@ -1,4 +1,5 @@
 ﻿import { NgModule, Injector } from "@angular/core";
+import { HttpModule, Http } from "@angular/http";
 import { BrowserModule } from "@angular/platform-browser";
 import { AppComponent } from "./app.component";
 import { SharedModule } from "./shared/shared.module";
@@ -7,7 +8,10 @@ import { RouterModule, Routes } from "@angular/router";
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { UserInfoService } from "./shared/services/userInfoService";
 import { CommonModule } from "./common.module";
-import {GuardService } from "./shared/services/guardService";
+import { GuardService } from "./shared/services/guardService";
+import { DependencyService } from "./shared/services/dependencyService";
+
+
 let CustomScriptsPath = "Scripts/custom/"
 declare var module: any;
 console.log(module);
@@ -21,14 +25,16 @@ var routes = [
 ];
 
 @NgModule({
-    imports: [BrowserModule, SharedModule, RouterModule.forRoot(routes), CommonModule.forRoot()],
+    imports: [BrowserModule, SharedModule, RouterModule.forRoot(routes), HttpModule, CommonModule.forRoot()],
     declarations: [AppComponent],
     bootstrap: [AppComponent]/*,
     providers: [UserInfoService]*/
 })
 export class AppModule {
-    constructor(private _injector: Injector) {
+    constructor(_injector: Injector) {
+        console.log("app.moodule");
         inj = _injector;
+        DependencyService.setInjector(inj);
     }
 }
 

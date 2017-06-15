@@ -1,6 +1,9 @@
-﻿using Ang2ToDoItems.Models;
+﻿using Ang2ToDoItems.Data.Services.Identity;
+using Ang2ToDoItems.Models;
 using Ang2ToDoItems.Models.Identity;
+using Ang2ToDoItems.Services;
 using Ang2ToDoItems.Services.Identity;
+using Autofac;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
@@ -14,11 +17,16 @@ namespace Ang2ToDoItems.Controllers
 {
     public class AccountController : Controller
     {
-        private IUserService UserService
+        /*public AccountController(ApplicationUserManager manager)
+        {
+            var i = 0;
+        }*/
+
+        private ApplicationUserManager UserService
         {
             get
             {
-                return HttpContext.GetOwinContext().GetUserManager<IUserService>();
+                return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
         }
 
@@ -45,23 +53,26 @@ namespace Ang2ToDoItems.Controllers
 
         public async Task<ActionResult> LogIn(LoginModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var user = new UserModel { Email = model.Email, Password = model.Password };
-                var claims =await UserService.Auth(user);
-                if (claims == null)
-                    ModelState.AddModelError("", "Неверный логин/пароль.");
-                else
+                using (var scope = DependencyConfig.Container.BeginLifetimeScope())
                 {
-                    AuthenticationManager.SignOut();
-                    AuthenticationManager.SignIn(new AuthenticationProperties
+                    var service = DependencyConfig.Container.Resolve<IUserService>();
+                    var authResult = await service.Auth(new UserModel { Email = model.Email, Name = model.Email, Password = model.Password });
+                    if (authResult != null)
                     {
-                         IsPersistent=true
-                    }, claims);
-                    return RedirectToAction("Index", "Home");
+                        AuthenticationManager.SignOut();
+                        AuthenticationManager.SignIn(new AuthenticationProperties
+                        {
+                            IsPersistent = true
+                        }, authResult);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                        ModelState.AddModelError("", "Неверный логин/пароль.");
                 }
             }
-            return View("Index",model);
+            return View("Index", model);
         }
 
         [HttpPost]
@@ -74,15 +85,15 @@ namespace Ang2ToDoItems.Controllers
         [HttpPost]
         public ActionResult Register(RegisterModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var result=UserService.Create(new UserModel
+                /*var result=UserService.Create(new UserModel
                 {
                     Email=model.Email,
                     Name=model.Name,
                     Password=model.Password,
                     Role="Administrator"
-                });
+                });*/
                 return RedirectToAction("Index", "Home");
             }
             else

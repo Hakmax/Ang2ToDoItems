@@ -8,44 +8,53 @@ using Ang2ToDoItems.Models.Identity;
 using Ang2ToDoItems.Data.Services;
 using Ang2ToDoItems.Data.Entities.Identity;
 using Microsoft.AspNet.Identity;
+using Ang2ToDoItems.Data.Services.Identity;
 
 namespace Ang2ToDoItems.Services.Identity
 {
     internal class UserService : IUserService
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public UserService(IUnitOfWork unitOfWork)
+        private readonly Lazy<ApplicationUserManager> _userManager;
+        private readonly Lazy<ApplicationRoleManager> _roleManager;
+        private readonly Lazy<IClientProfileDataService> _clientProfileDataService;
+        private readonly Lazy<IUnitOfWork> _unitOfWork;
+        public UserService(Lazy<IUnitOfWork> unitOfWork, Lazy<ApplicationUserManager> userManager,
+            Lazy<IClientProfileDataService> clientProfileDataService,
+            Lazy<ApplicationRoleManager> roleManager)
         {
             _unitOfWork = unitOfWork;
+            _userManager = userManager;
+            _clientProfileDataService = clientProfileDataService;
+            _roleManager = roleManager;
         }
 
         public async Task<ClaimsIdentity> Auth(UserModel user)
         {
             ClaimsIdentity claims = null;
-            var appUser = await _unitOfWork.ApplicationUserManager.FindAsync(user.Email, user.Password);
+            var appUser = await _userManager.Value.FindAsync(user.Email, user.Password);
             if (appUser != null)
             {
-                claims = await _unitOfWork.ApplicationUserManager.CreateIdentityAsync(appUser,
+                claims = await _userManager.Value.CreateIdentityAsync(appUser,
                     DefaultAuthenticationTypes.ApplicationCookie);
                 claims.AddClaim(new Claim("LoginDate", DateTime.Now.ToString()));
             }
             return claims;
         }
 
-        public async Task<OperationResult> Create(UserModel user)
+        public async Task<OperationResult> CreateUser(UserModel user)
         {
-            var appUSer =await _unitOfWork.ApplicationUserManager.FindByEmailAsync(user.Email);
-            if(appUSer==null)
+            var appUSer = await _userManager.Value.FindByEmailAsync(user.Email);
+            if (appUSer == null)
             {
-                appUSer = new Data.Entities.Identity.ApplicationUser { Email = user.Email, UserName = user.Name  };
-                var res = _unitOfWork.ApplicationUserManager.Create(appUSer);
+                appUSer = new Data.Entities.Identity.ApplicationUser { Email = user.Email, UserName = user.Name };
+                var res = _userManager.Value.Create(appUSer);
                 if (res.Errors.Count() > 0)
                     return new OperationResult { Message = res.Errors.FirstOrDefault() };
-                var addPassResult= _unitOfWork.ApplicationUserManager.AddPassword(appUSer.Id, user.Password);
+                var addPassResult = _userManager.Value.AddPassword(appUSer.Id, user.Password);
                 //var roleResult= _unitOfWork.ApplicationUserManager.AddToRole(appUSer.Id, user.Role);
-                var clientProfile = new ClientProfile { ApplicationUserId=appUSer.Id, Address = user.Address, Name = user.Name };
-                _unitOfWork.ClientManager.Create(clientProfile);
-                await _unitOfWork.SaveAsync();
+                var clientProfile = new ClientProfile { ApplicationUserId = appUSer.Id, Address = user.Address, Name = user.Name };
+                _clientProfileDataService.Value.Create(clientProfile);
+                await _unitOfWork.Value.SaveAsync();
                 return new OperationResult { Succedeed = true, Message = "Регистрация успешно пройдена" };
             }
             else
@@ -53,24 +62,11 @@ namespace Ang2ToDoItems.Services.Identity
                 return new OperationResult { Succedeed = false };
             }
         }
+        
 
         public void Dispose()
         {
-            _unitOfWork.Dispose();
-        }
-
-        public async Task SetInitialData(UserModel user, List<string> roles)
-        {
-            foreach (string roleName in roles)
-            {
-                var role = await _unitOfWork.ApplicationRoleManager.FindByNameAsync(roleName);
-                if (role == null)
-                {
-                    role = new ApplicationRole { Name = roleName };
-                    await _unitOfWork.ApplicationRoleManager.CreateAsync(role);
-                }
-            }
-            await Create(user);
+            //GC.SuppressFinalize(this);
         }
     }
 }

@@ -1,17 +1,18 @@
-﻿import { Injectable } from "@angular/core";
+﻿import { Injectable, ReflectiveInjector } from "@angular/core";
 import { HttpModule, Http } from "@angular/http";
 import { CookieService } from "angular2-cookie/core";
 import { Subject } from "rxjs";
 import { Observable } from "rxjs/Observable";
+import { UserInfo } from "../models/userInfo";
+import { DependencyService } from "../../shared/services/dependencyService";
 
-import {UserInfo } from "../models/userInfo";
 
 @Injectable()
 export class UserInfoService {
     userSubject: Subject<UserInfo> = new Subject();
+    private _http: Http;
 
-    constructor(private cookieService: CookieService) {
-            
+    constructor(private _cookieService: CookieService) {
     }
 
     change() {
@@ -22,7 +23,13 @@ export class UserInfoService {
     }
 
     getUser(): Observable<UserInfo> {
-        return this.userSubject;
+        this._http = DependencyService.resolve(Http);
+        console.log("http", this._http);
+        
+        return this._http.post("api/user/load", null).map(res => {
+            return res.json();
+        });
+
     }
 
     getCookieUserInfo(): UserInfo {

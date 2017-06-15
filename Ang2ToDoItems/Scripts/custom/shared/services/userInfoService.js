@@ -10,11 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
+const http_1 = require("@angular/http");
 const core_2 = require("angular2-cookie/core");
 const rxjs_1 = require("rxjs");
+const dependencyService_1 = require("../../shared/services/dependencyService");
 let UserInfoService = class UserInfoService {
-    constructor(cookieService) {
-        this.cookieService = cookieService;
+    constructor(_cookieService) {
+        this._cookieService = _cookieService;
         this.userSubject = new rxjs_1.Subject();
     }
     change() {
@@ -24,7 +26,11 @@ let UserInfoService = class UserInfoService {
         });
     }
     getUser() {
-        return this.userSubject;
+        this._http = dependencyService_1.DependencyService.resolve(http_1.Http);
+        console.log("http", this._http);
+        return this._http.post("api/user/load", null).map(res => {
+            return res.json();
+        });
     }
     getCookieUserInfo() {
         var res = null;

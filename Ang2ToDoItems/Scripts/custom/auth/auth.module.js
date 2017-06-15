@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
+const http_1 = require("@angular/http");
 const userInfo_component_1 = require("./userInfo.component");
 const platform_browser_1 = require("@angular/platform-browser");
 const cookies_service_1 = require("angular2-cookie/services/cookies.service");
@@ -15,7 +16,7 @@ let AuthModule = class AuthModule {
 };
 AuthModule = __decorate([
     core_1.NgModule({
-        imports: [platform_browser_1.BrowserModule /*, RouterModule.forRoot([{ path: "*", component: UserInfoComponent }])*/, common_module_1.CommonModule.forRoot()],
+        imports: [platform_browser_1.BrowserModule /*, RouterModule.forRoot([{ path: "*", component: UserInfoComponent }])*/, common_module_1.CommonModule.forRoot(), http_1.HttpModule],
         declarations: [userInfo_component_1.UserInfoComponent],
         providers: [/*UserInfoService,*/ cookies_service_1.CookieService],
         bootstrap: [userInfo_component_1.UserInfoComponent]

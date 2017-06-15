@@ -1,5 +1,7 @@
 ﻿using Ang2ToDoItems.Services.Identity;
+using Autofac;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Owin;
 using System;
@@ -10,20 +12,26 @@ using System.Web;
 [assembly: OwinStartup(typeof(Ang2ToDoItems.App_Start.Startup))]
 namespace Ang2ToDoItems.App_Start
 {
-    
+
     public class Startup
     {
-        private readonly IServiceCreator _serviceCreator = new ServiceCreator();
         public void Configuration(IAppBuilder app)
         {
-            app.CreatePerOwinContext<IUserService>(() =>
+            DependencyConfig.Configure();
+
+            /*app.CreatePerOwinContext<IUserService>(() =>
             {
-                return _serviceCreator.CreateUserService();
-            });
+                using (var scope = DependencyConfig.Container.BeginLifetimeScope())
+                {
+                    var userService = scope.Resolve<IUserService>();
+                    return userService;
+                }
+            });*/
+            
             app.UseCookieAuthentication(new Microsoft.Owin.Security.Cookies.CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath=new PathString("/Account/Login")
+                LoginPath = new PathString("/Account/Login")
             });
         }
 

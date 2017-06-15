@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Ang2ToDoItems.Data.Entities
 {
-    public class EntityWithId<T>
+    public class Entity<T>
     {   
         public T Id { get; set; }
     }
 
 
-    public class EntityWithName<T> : EntityWithId<T>
+    public class EntityWithName<T> : Entity<T>
     {
         [Required]
         [MaxLength(255)]

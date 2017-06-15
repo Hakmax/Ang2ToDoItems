@@ -46,6 +46,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.6.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.6.0\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="AutoMapper, Version=6.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
@@ -176,6 +180,7 @@
   <ItemGroup>
     <Compile Include="ApiControllers\CategoryController.cs" />
     <Compile Include="ApiControllers\ToDoItemController.cs" />
+    <Compile Include="ApiControllers\UserController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -185,6 +190,7 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ToDoItemController.cs" />
+    <Compile Include="DependencyConfig.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -274,10 +280,12 @@
     <TypeScriptCompile Include="Scripts\custom\shared\models\appOptions.ts" />
     <TypeScriptCompile Include="Scripts\custom\shared\models\paging.ts" />
     <TypeScriptCompile Include="Scripts\custom\shared\models\userInfo.ts" />
+    <TypeScriptCompile Include="Scripts\custom\shared\services\dependencyService.ts" />
     <TypeScriptCompile Include="Scripts\custom\shared\services\guardService.ts" />
     <TypeScriptCompile Include="Scripts\custom\shared\services\userInfoService.ts" />
     <TypeScriptCompile Include="Scripts\custom\shared\shared.module.ts" />
     <TypeScriptCompile Include="Scripts\custom\auth\userInfo.component.ts" />
+    <TypeScriptCompile Include="Scripts\custom\shared\siteContext.ts" />
     <TypeScriptCompile Include="Scripts\custom\todoItems\todoItems.module.ts" />
     <TypeScriptCompile Include="Scripts\custom\categories\categoriesList.component.ts" />
     <TypeScriptCompile Include="Scripts\custom\todoItems\editToDoItemModal2.ts" />
@@ -291,6 +299,14 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Ang2ToDoItems.Data.Entities\Ang2ToDoItems.Data.Entities.csproj">
+      <Project>{bd3cb129-fdfd-4531-b73b-e7e7e62d744d}</Project>
+      <Name>Ang2ToDoItems.Data.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ang2ToDoItems.Data.Services\Ang2ToDoItems.Data.Services.csproj">
+      <Project>{B3867823-E1CB-4648-94B0-F4A0D28AF32B}</Project>
+      <Name>Ang2ToDoItems.Data.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ang2ToDoItems.Models\Ang2ToDoItems.Models.csproj">
       <Project>{3d34faa7-f7af-4955-ad43-6c416fa00bcf}</Project>
       <Name>Ang2ToDoItems.Models</Name>

@@ -6,17 +6,17 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ang2ToDoItems.Services.Identity
+namespace Ang2ToDoItems.Services
 {
     public interface IUserService:IDisposable
     {
-        Task<OperationResult> Create(UserModel user);
+        Task<OperationResult> CreateUser(UserModel user);
         Task<ClaimsIdentity> Auth(UserModel user);
-        Task SetInitialData(UserModel user, List<string> roles);
     }
 
-    public interface IServiceCreator
+    public interface IRoleService
     {
-        IUserService CreateUserService();
+        void CreateRole(string roleName);
     }
+    
 }

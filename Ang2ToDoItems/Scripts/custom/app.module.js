@@ -10,12 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
+const http_1 = require("@angular/http");
 const platform_browser_1 = require("@angular/platform-browser");
 const app_component_1 = require("./app.component");
 const shared_module_1 = require("./shared/shared.module");
 const router_1 = require("@angular/router");
 const platform_browser_dynamic_1 = require("@angular/platform-browser-dynamic");
 const common_module_1 = require("./common.module");
+const dependencyService_1 = require("./shared/services/dependencyService");
 let CustomScriptsPath = "Scripts/custom/";
 console.log(module);
 var platform = platform_browser_dynamic_1.platformBrowserDynamic();
@@ -26,13 +28,14 @@ var routes = [
 ];
 let AppModule = class AppModule {
     constructor(_injector) {
-        this._injector = _injector;
+        console.log("app.moodule");
         inj = _injector;
+        dependencyService_1.DependencyService.setInjector(inj);
     }
 };
 AppModule = __decorate([
     core_1.NgModule({
-        imports: [platform_browser_1.BrowserModule, shared_module_1.SharedModule, router_1.RouterModule.forRoot(routes), common_module_1.CommonModule.forRoot()],
+        imports: [platform_browser_1.BrowserModule, shared_module_1.SharedModule, router_1.RouterModule.forRoot(routes), http_1.HttpModule, common_module_1.CommonModule.forRoot()],
         declarations: [app_component_1.AppComponent],
         bootstrap: [app_component_1.AppComponent] /*,
         providers: [UserInfoService]*/
