@@ -9,34 +9,38 @@ import { DependencyService } from "../../shared/services/dependencyService";
 
 @Injectable()
 export class UserInfoService {
-    userSubject: Subject<UserInfo> = new Subject();
-    private _http: Http;
+    private  _apiPrefix: string = "api/user/";
 
-    constructor(private _cookieService: CookieService) {
+    constructor(private _cookieService: CookieService, private _http: Http) {
     }
-
-    change() {
-        this.userSubject.next({
-            Name: "123",
-            Token: new Date().toString()
-        });
-    }
+    
 
     getUser(): Observable<UserInfo> {
-        this._http = DependencyService.resolve(Http);
-        console.log("http", this._http);
-        
-        return this._http.post("api/user/load", null).map(res => {
+        return this._http.post(this._apiPrefix+ "load", null).map(res => {
             return res.json();
         });
 
     }
 
+    logout(): Observable<boolean> {
+        return this._http.post(this._apiPrefix + "logout", null).map(x => {
+            return x.ok;
+        });
+    }
+
+    auth(userName: string, password: string): Observable<any> {
+        return this._http.post(this._apiPrefix + "auth", {
+            UserName: userName,
+            Password: password
+        }).map(x => {
+            return x.ok;
+            }).catch(y => {
+                throw(y.json());
+        });
+    }
+
     getCookieUserInfo(): UserInfo {
         var res: UserInfo = null;
-        /*var cookieInfo = this.cookieService.get("userData");
-        if (cookieInfo)
-            res = JSON.parse(cookieInfo);*/
         return res;
     }
 }

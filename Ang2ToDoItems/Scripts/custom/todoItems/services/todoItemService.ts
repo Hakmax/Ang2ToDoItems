@@ -38,4 +38,10 @@ export class ToDoItemService {
             return x.ok;
         });
     }
+
+    removeToDoItem(id: number): Observable<any> {
+        return this.http.delete(this.ToDoItemsApiUrl+"?id="+ id).map(x => {
+            return x.ok;
+        });
+    }
 }

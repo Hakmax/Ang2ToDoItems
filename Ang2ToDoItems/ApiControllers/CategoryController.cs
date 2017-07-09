@@ -7,41 +7,59 @@ using Ang2ToDoItems.Helpers;
 using Ang2ToDoItems.Models;
 using System.IO;
 using AutoMapper;
+using Microsoft.AspNet.Identity;
+using Autofac;
+using Ang2ToDoItems.Services;
 
 namespace Ang2ToDoItems.ApiControllers
 {
-    public class CategoryController:ApiController
+    [Authorize()]
+    public class CategoryController : ApiController
     {
         private readonly SiteJsonDataHelper _siteJsonDataHelper = new SiteJsonDataHelper();
         public IHttpActionResult GetAll()
         {
-            var categories = _siteJsonDataHelper.LoadCategoriesFromAppData();
-            return Ok(categories);
+            using (var scope = DependencyConfig.Container.BeginLifetimeScope())
+            {
+                var service = scope.Resolve<IToDoItemService>();
+                return Ok(service.GetUserToDoItemCategories(User.Identity.GetUserId()));
+            }
         }
 
         [HttpPost]
-        public IHttpActionResult Post(Category category)
+        public IHttpActionResult Post(ModelWithName<int> category)
         {
-            var curCategories= _siteJsonDataHelper.LoadCategoriesFromAppData();
-            category.Id = curCategories.Count + 1;
-            curCategories.Add(category);
-            var categoriesJson = Newtonsoft.Json.JsonConvert.SerializeObject(curCategories, Newtonsoft.Json.Formatting.Indented);
-            File.WriteAllText(_siteJsonDataHelper.AppDataCategoriesJsonFilePath, categoriesJson, System.Text.Encoding.Default);
-            return Ok();
+            using (var scope = DependencyConfig.Container.BeginLifetimeScope())
+            {
+                var service = scope.Resolve<IToDoItemService>();
+                service.CreateToDoItemCategory(category, User.Identity.GetUserId());
+                return Ok();
+            }
         }
 
         [HttpPut]
-        public IHttpActionResult Put([FromBody] Category category)
+        public IHttpActionResult Put([FromBody] ModelWithName<int> category)
         {
-            var curCategories = _siteJsonDataHelper.LoadCategoriesFromAppData();
-            var categoryToUpdate = curCategories.FirstOrDefault(x => x.Id == category.Id);
-            if(categoryToUpdate!=null)
+            using (var scope = DependencyConfig.Container.BeginLifetimeScope())
             {
-                Mapper.Map(category, categoryToUpdate);
-                var categoriesJson = Newtonsoft.Json.JsonConvert.SerializeObject(curCategories, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText(_siteJsonDataHelper.AppDataCategoriesJsonFilePath, categoriesJson, System.Text.Encoding.Default);
+                var service = scope.Resolve<IToDoItemService>();
+                service.UpdateToDoItemCategory(category, User.Identity.GetUserId());
+                return Ok();
             }
-            return Ok();
+        }
+
+        [HttpDelete]
+        public IHttpActionResult Delete(int id)
+        {
+            using (var scope = DependencyConfig.Container.BeginLifetimeScope())
+            {
+                var service = scope.Resolve<IToDoItemService>();
+                if (service.DeleteUserToDoItemCategory(id, User.Identity.GetUserId()))
+                    return Ok();
+                else
+                    return BadRequest();
+            }
+
         }
     }
 }

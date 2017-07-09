@@ -1,17 +1,17 @@
 ﻿import { Injectable } from "@angular/core";
-import { UserInfo } from "./models/userInfo";
+import { UserInfo, UserContext } from "./models/userInfo";
 import { Observable} from "rxjs/Observable";
 import { Subject } from "rxjs";
 
 @Injectable()
 export class SiteContext {
-    private _user = new Subject<UserInfo>();
+    private _userContext = new Subject<UserContext>();
 
-    getUser(): Observable<UserInfo> {
-        return this._user;
+    getUser(): Observable<UserContext> {
+        return this._userContext;
     }
 
-    setUser(user: UserInfo) {
-        this._user.next(user);
+    setUser(userContext: UserContext) {
+        this._userContext.next(userContext);
     }
 }

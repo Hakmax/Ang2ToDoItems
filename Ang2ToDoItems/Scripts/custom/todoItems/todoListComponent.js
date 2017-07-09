@@ -16,6 +16,7 @@ const editToDoItemModal2_1 = require("./editToDoItemModal2");
 const ng2_bootstrap_modal_1 = require("ng2-bootstrap-modal");
 const categoriesService_1 = require("../categories/services/categoriesService");
 const userInfo_1 = require("../shared/models/userInfo");
+const commonDialog_component_1 = require("../shared/commonDialog.component");
 let ToDoItemListComponent = class ToDoItemListComponent {
     constructor(todoItemService, dialogService, categoriesService, userInfo) {
         this.todoItemService = todoItemService;
@@ -47,6 +48,26 @@ let ToDoItemListComponent = class ToDoItemListComponent {
         console.log(event);
         this.curPage = event.page;
         this.loadToDoItems();
+    }
+    removeToDoItem(item) {
+        this.dialogService.addDialog(commonDialog_component_1.CommonDialogComponent, {
+            title: "Удаление задачи",
+            text: "Вы действительно хотите удалить задачу?"
+        }, {
+            closeByClickingOutside: true
+        }).subscribe(x => {
+            if (x && x.closedByOkButton) {
+                this.loading = true;
+                console.log("delete!");
+                this.todoItemService.removeToDoItem(item.Id).subscribe(x => {
+                    var index = this.toDoItems.indexOf(item);
+                    if (index > -1) {
+                        this.toDoItems.splice(index, 1);
+                    }
+                    this.loading = false;
+                });
+            }
+        });
     }
     showDialog(item) {
         this.dialogService.addDialog(editToDoItemModal2_1.EditToDoItemModal2Component, {

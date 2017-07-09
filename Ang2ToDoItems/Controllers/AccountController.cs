@@ -58,7 +58,7 @@ namespace Ang2ToDoItems.Controllers
                 using (var scope = DependencyConfig.Container.BeginLifetimeScope())
                 {
                     var service = DependencyConfig.Container.Resolve<IUserService>();
-                    var authResult = await service.Auth(new UserModel { Email = model.Email, Name = model.Email, Password = model.Password });
+                    var authResult = await service.Auth(model.Email, model.Password);
                     if (authResult != null)
                     {
                         AuthenticationManager.SignOut();
@@ -83,7 +83,7 @@ namespace Ang2ToDoItems.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(RegisterModel model)
+        public ActionResult Register(RegisterUserModel model)
         {
             if (ModelState.IsValid)
             {
@@ -100,6 +100,11 @@ namespace Ang2ToDoItems.Controllers
             {
                 return RedirectToAction("Register", "Account");
             }
+        }
+
+        public ActionResult UserProfile()
+        {
+            return View();
         }
     }
 }

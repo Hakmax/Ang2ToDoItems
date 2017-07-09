@@ -7,25 +7,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
-const userInfoService_1 = require("./shared/services/userInfoService");
-const cookies_service_1 = require("angular2-cookie/services/cookies.service");
 const http_1 = require("@angular/http");
+const siteContext_1 = require("./shared/siteContext");
 let CommonModule = CommonModule_1 = class CommonModule {
     static forRoot() {
         console.log("forRoot");
         if (!this.root) {
-            //var http = new Http(XHRBackend, RequestOptions);
-            var service = new userInfoService_1.UserInfoService(new cookies_service_1.CookieService());
-            var userInfoServiceProvider = {
-                provide: userInfoService_1.UserInfoService, useValue: service
+            var siteContext = new siteContext_1.SiteContext();
+            var siteContextProvider = {
+                provide: siteContext_1.SiteContext, useValue: siteContext
             };
             this.root = {
                 ngModule: CommonModule_1,
-                providers: [userInfoServiceProvider,
-                    {
-                        provide: http_1.Http, useFactory: (backend, defaultOptions) => new http_1.Http(backend, defaultOptions),
-                        deps: [http_1.XHRBackend, http_1.RequestOptions]
-                    }]
+                providers: [siteContextProvider]
             };
         }
         return this.root;

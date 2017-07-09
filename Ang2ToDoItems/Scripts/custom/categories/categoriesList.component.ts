@@ -1,11 +1,17 @@
 ﻿import { Component, ChangeDetectorRef } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
 import { Category } from "./models/category";
 import { CategoriesService } from "./services/categoriesService";
 import { DialogService } from "ng2-bootstrap-modal";
 import { EditCategoryModalComponent } from "./editCategoryModal.component";
-import { UserInfoService } from "../shared/services/userInfoService";
-import { UserInfo } from "../shared/models/userInfo";
-
+import { SiteContext } from "../shared/siteContext";
+import { UserInfo, UserContext } from "../shared/models/userInfo";
+import { CommonDialogComponent } from "../shared/commonDialog.component";
+import { Observable, Subject } from "rxjs";
+enum CategoriesViewMode {
+    List,
+    Edit
+}
 
 declare var module: any;
 declare var _: any;
@@ -15,33 +21,45 @@ declare var _: any;
     templateUrl: "categories.component.html"
 })
 export class CategoriesListComponent {
-    userInfo: UserInfo;
+    userInfo: UserContext;
     loading: boolean;
     categories: Category[];
+    private _currentMode: CategoriesViewMode;
+    private _editedId: number;
 
     constructor(private categoriesService: CategoriesService, private dialogService: DialogService,
-        private _userInfoService: UserInfoService, private _changeDetector: ChangeDetectorRef) {
-        this.userInfo = {
-            Name: "test|",
-            Token: ""
-        };
-        this.loadCategories();
+        private _siteContext: SiteContext, private _changeDetector: ChangeDetectorRef, private _router: Router,
+        private _activatedRoute: ActivatedRoute) {
+        if (_activatedRoute.snapshot.params["mode"] == "edit") {
+            this._currentMode = CategoriesViewMode.Edit;
+            this._editedId = _activatedRoute.snapshot.params["id"];
+        }
+        this.loadCategories().then(x => {
+            if (this._currentMode == CategoriesViewMode.Edit) {
+                var categoryForEdit = this.categories.find(x => x.Id == this._editedId);
+                if (categoryForEdit)
+                    this.editCategory(categoryForEdit);
+            }
+        });
         var self = this;
-        this._userInfoService.getUser().subscribe(x => {
+        this._siteContext.getUser().subscribe(x => {
             console.log("categoriesList", x);
             this.userInfo = x;
             this._changeDetector.detectChanges();
         });
     }
 
-    loadCategories() {
+    loadCategories(): Promise<boolean> {
         this.loading = true;
-        setTimeout(() => {
-            this.categoriesService.getCategories().subscribe(x => {
-                this.categories = x;
-                this.loading = false;
-            });
-        }, 500);
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                this.categoriesService.getCategories().subscribe(x => {
+                    this.categories = x;
+                    this.loading = false;
+                    resolve(true);
+                });
+            }, 500);
+        });
     }
 
     editCategory(category: Category) {
@@ -64,6 +82,22 @@ export class CategoriesListComponent {
     showCreateCategoryModal() {
         var newCategory = new Category(null, "");
         this.showDialogForCategory(newCategory);
+    }
+
+    removeCategory(category: Category) {
+        this.dialogService.addDialog(CommonDialogComponent,
+            { title: "Удаление категории", text: "Вы действительно хотите удалить категорию?" },
+            { closeByClickingOutside: true }).subscribe(x => {
+                if (x && x.closedByOkButton) {
+                    this.loading = true;
+                    this.categoriesService.deleteCategory(category.Id).subscribe(x => {
+                        if (x) {
+                            this.categories.splice(this.categories.indexOf(category), 1);
+                        }
+                        this.loading = false;
+                    });
+                }
+            });
     }
 
     private saveCategory(category: Category) {

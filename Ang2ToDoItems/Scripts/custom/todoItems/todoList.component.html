@@ -16,19 +16,26 @@
                 <th>Комментарий</th>
                 <th style="width:10%">Статус</th>
                 <th style="width:10%"></th>
+                <th style="width:10%"></th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let item of toDoItems">
                 <td>{{item.Id}}</td>
                 <td>{{item.Name}}</td>
-                <td>{{item.Category.Name}}</td>
+                <td>{{(item.Category)? item.Category.Name:"Без категории"}}</td>
                 <td>{{item.Comment}}</td>
                 <td>{{item.Status}}</td>
                 <td>
                     <a class="btn btn-primary" (click)="editToDoItem(item)">
                         Изменить
                         <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-danger" (click)="removeToDoItem(item)">
+                        Удалить
+                        <i class="glyphicon glyphicon-remove"></i>
                     </a>
                 </td>
             </tr>

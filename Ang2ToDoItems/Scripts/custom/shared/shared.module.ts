@@ -7,7 +7,7 @@ import { CommonModule } from "@angular/common";
 import { GuardService } from "./services/guardService";
 @NgModule({
     imports: [FormsModule, HttpModule, CommonModule],
-    providers: [CookieService/*, UserInfoService*/, GuardService]
+    providers: [CookieService, UserInfoService, GuardService]
 })
 export class SharedModule {
 

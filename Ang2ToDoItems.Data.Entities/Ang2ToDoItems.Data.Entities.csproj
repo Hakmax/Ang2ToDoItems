@@ -62,10 +62,18 @@
     <Compile Include="Identity\ApplicationUser.cs" />
     <Compile Include="Identity\ClientProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToDoItem.cs" />
+    <Compile Include="ToDoItemCategory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ang2ToDoItems.Common\Ang2ToDoItems.Common.csproj">
+      <Project>{3C2D8060-24A5-41B5-A5E6-08859ED8D3B2}</Project>
+      <Name>Ang2ToDoItems.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

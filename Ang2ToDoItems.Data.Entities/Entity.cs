@@ -7,9 +7,14 @@ using System.Threading.Tasks;
 
 namespace Ang2ToDoItems.Data.Entities
 {
-    public class Entity<T>
+    public class Entity<T>:IEntity<T>
     {   
         public T Id { get; set; }
+    }
+
+    public interface IEntity<T>
+    {
+        T Id { get; set; }
     }
 
 

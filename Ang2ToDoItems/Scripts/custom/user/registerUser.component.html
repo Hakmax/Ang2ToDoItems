@@ -1,0 +1,29 @@
+﻿<div class="loading-mask" [hidden]="!loading"></div>
+<div class="container">
+    <form #form="ngForm" class="form-horizontal" *ngIf="!registerSuccess">
+        <div class="form-group">
+            <label class="control-label">Email</label>
+            <input type="email" email class="form-control" required name="email" [(ngModel)]="registerUserModel.Email" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Имя пользователя (никнейм)</label>
+            <input type="text" class="form-control" required name="username" [(ngModel)]="registerUserModel.UserName" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Пароль</label>
+            <input type="password" minlength="6" class="form-control" required name="password" [(ngModel)]="registerUserModel.Password" />
+        </div>
+        <div class="alert alert-danger" role="alert" [hidden]="!error">
+            <span class="glyphicon glyphicon-exclamation-sign"></span>
+            {{error}}
+        </div>
+        <div>
+            <a (click)="registerUser()" class="btn btn-primary">Регистрация</a>
+        </div>
+    </form>
+
+    <div class="alert alert-success" [hidden]="!registerSuccess">
+        <span class="glyphicon glyphicon-ok-sign"></span>
+        Регистрация прошла успешно. На ваш адрес электронной почты отправлено письмо с инструкциями для завершения регистрации.
+    </div>
+</div>

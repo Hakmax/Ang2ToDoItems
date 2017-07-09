@@ -14,6 +14,9 @@ namespace Ang2ToDoItems.Controllers
             return View();
         }
 
-
+        public ActionResult Edit()
+        {
+            return View("Index");
+        }
     }
 }

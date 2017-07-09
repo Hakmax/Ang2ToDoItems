@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
+const userInfoService_1 = require("./services/userInfoService");
 const cookies_service_1 = require("angular2-cookie/services/cookies.service");
 const forms_1 = require("@angular/forms");
 const http_1 = require("@angular/http");
@@ -17,7 +18,7 @@ let SharedModule = class SharedModule {
 SharedModule = __decorate([
     core_1.NgModule({
         imports: [forms_1.FormsModule, http_1.HttpModule, common_1.CommonModule],
-        providers: [cookies_service_1.CookieService /*, UserInfoService*/, guardService_1.GuardService]
+        providers: [cookies_service_1.CookieService, userInfoService_1.UserInfoService, guardService_1.GuardService]
     })
 ], SharedModule);
 exports.SharedModule = SharedModule;

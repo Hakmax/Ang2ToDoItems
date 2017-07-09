@@ -12,37 +12,40 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const http_1 = require("@angular/http");
 const core_2 = require("angular2-cookie/core");
-const rxjs_1 = require("rxjs");
-const dependencyService_1 = require("../../shared/services/dependencyService");
 let UserInfoService = class UserInfoService {
-    constructor(_cookieService) {
+    constructor(_cookieService, _http) {
         this._cookieService = _cookieService;
-        this.userSubject = new rxjs_1.Subject();
-    }
-    change() {
-        this.userSubject.next({
-            Name: "123",
-            Token: new Date().toString()
-        });
+        this._http = _http;
+        this._apiPrefix = "api/user/";
     }
     getUser() {
-        this._http = dependencyService_1.DependencyService.resolve(http_1.Http);
-        console.log("http", this._http);
-        return this._http.post("api/user/load", null).map(res => {
+        return this._http.post(this._apiPrefix + "load", null).map(res => {
             return res.json();
+        });
+    }
+    logout() {
+        return this._http.post(this._apiPrefix + "logout", null).map(x => {
+            return x.ok;
+        });
+    }
+    auth(userName, password) {
+        return this._http.post(this._apiPrefix + "auth", {
+            UserName: userName,
+            Password: password
+        }).map(x => {
+            return x.ok;
+        }).catch(y => {
+            throw (y.json());
         });
     }
     getCookieUserInfo() {
         var res = null;
-        /*var cookieInfo = this.cookieService.get("userData");
-        if (cookieInfo)
-            res = JSON.parse(cookieInfo);*/
         return res;
     }
 };
 UserInfoService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [core_2.CookieService])
+    __metadata("design:paramtypes", [core_2.CookieService, http_1.Http])
 ], UserInfoService);
 exports.UserInfoService = UserInfoService;
 //# sourceMappingURL=userInfoService.js.map

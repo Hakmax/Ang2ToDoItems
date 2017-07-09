@@ -1,5 +1,4 @@
 ﻿using Ang2ToDoItems.Models;
-using Ang2ToDoItems.Models.Api;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,11 @@ using System.Net.Http;
 using System.Web.Hosting;
 using System.Web.Http;
 using Ang2ToDoItems.Helpers;
+using Microsoft.AspNet.Identity;
+using Ang2ToDoItems.Common;
+using Autofac;
+using Ang2ToDoItems.Services;
+using Ang2ToDoItems.Models.ToDoItem;
 
 namespace Ang2ToDoItems.ApiControllers
 {
@@ -18,33 +22,22 @@ namespace Ang2ToDoItems.ApiControllers
         private readonly SiteJsonDataHelper _siteJsonDataHelper = new SiteJsonDataHelper();
         public IHttpActionResult GetAll([FromUri]PageListRequest request)
         {
-            var items = MapToDoItems(_siteJsonDataHelper.LoadToDoItemsFromAppData());
-            var result = new ListResponse<ToDoItemApiModel>();
-            result.TotalCount = items.Count;
             request.PageSize = 5;
-            result.Items = items.Skip(request.GetSkipCount()).Take(request.PageSize).ToList();
-            return Ok(result);
-        }
-
-        private IList<ToDoItemApiModel>MapToDoItems(IList<ToDoItem>items)
-        {
-            var result = new List<ToDoItemApiModel>();
-            var categories = _siteJsonDataHelper.LoadCategoriesFromAppData();
-            foreach(var item in items)
+            using (var scope = DependencyConfig.Container.BeginLifetimeScope())
             {
-                var todoItemApiModel = Mapper.Map<ToDoItemApiModel>(item);
-                var category = categories.FirstOrDefault(x => x.Id == item.CategoryId);
-                if (category != null)
-                    todoItemApiModel.Category = Mapper.Map<ModelWithName<int>>(category);
-                result.Add(todoItemApiModel);
+                var service = scope.Resolve<IToDoItemService>();
+                var items = service.GetUserToDoItems(request, User.Identity.GetUserId());
+                return Ok(items);
             }
-            return result;
         }
-
+        
         public IHttpActionResult Get(int id)
         {
-            var items = _siteJsonDataHelper.LoadToDoItemsFromAppData();
-            return Ok(MapToDoItems(items).FirstOrDefault(x => x.Id == id));
+            using (var scope = DependencyConfig.Container.BeginLifetimeScope())
+            {
+                var service = scope.Resolve<IToDoItemService>();
+                return Ok(service.GetUserToDoItem(id, User.Identity.GetUserId()));
+            }
         }
 
         public IHttpActionResult GetErr()
@@ -52,36 +45,35 @@ namespace Ang2ToDoItems.ApiControllers
             return Content(HttpStatusCode.BadRequest, new { Error = "error happened" });
         }
 
-        public IHttpActionResult Post(ToDoItemApiModel model)
+        public IHttpActionResult Post(ToDoItemModel model)
         {
-            var items = _siteJsonDataHelper.LoadToDoItemsFromAppData();
-            var newItem = Mapper.Map<ToDoItem>(model);
-            newItem.Id = items.Count + 1;
-            newItem.Status = ToDoItemStatus.New;
-            items.Add(newItem);
-            var jsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(items, Newtonsoft.Json.Formatting.Indented);
-            File.WriteAllText(_siteJsonDataHelper.AppDataToDoItemsJsonFilePath, jsonResult, System.Text.Encoding.Default);
+            using (var scope = DependencyConfig.Container.BeginLifetimeScope())
+            {
+                var service = scope.Resolve<IToDoItemService>();
+                service.CreateUserToDoItem(model, User.Identity.GetUserId());
+            }
             return Ok();
         }
 
-        public IHttpActionResult Put(ToDoItemApiModel model)
+        public IHttpActionResult Put(ToDoItemModel model)
         {
-            var items = _siteJsonDataHelper.LoadToDoItemsFromAppData();
-            var toUpdate = items.FirstOrDefault(x => x.Id == model.Id);
-            if (toUpdate != null)
+            using (var scope = DependencyConfig.Container.BeginLifetimeScope())
             {
-                var mapped = Mapper.Map<ToDoItem>(model);
-                Mapper.Map(mapped, toUpdate);
-                toUpdate.UpdatedOn = DateTime.Now;
-
-                var jsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(items, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText(_siteJsonDataHelper.AppDataToDoItemsJsonFilePath, jsonResult,System.Text.Encoding.Default);
-                return Ok();
+                var service = scope.Resolve<IToDoItemService>();
+                service.UpdateUserToDoItem(model, User.Identity.GetUserId());
             }
-            return BadRequest();
+            return Ok();
         }
 
-
-        
+        [HttpDelete]
+        public IHttpActionResult Delete(int id)
+        {
+            using (var scope = DependencyConfig.Container.BeginLifetimeScope())
+            {
+                var service = scope.Resolve<IToDoItemService>();
+                service.DeleteUserToItem(id, User.Identity.GetUserId());
+            }
+            return Ok();
+        }
     }
 }

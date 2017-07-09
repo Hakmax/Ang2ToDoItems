@@ -67,10 +67,16 @@
   <ItemGroup>
     <Compile Include="IIdentityServices.cs" />
     <Compile Include="Identity\UserService.cs" />
+    <Compile Include="Implementations\ToDoItemService.cs" />
+    <Compile Include="IToDoItemService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServicesModule.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Ang2ToDoItems.Common\Ang2ToDoItems.Common.csproj">
+      <Project>{3C2D8060-24A5-41B5-A5E6-08859ED8D3B2}</Project>
+      <Name>Ang2ToDoItems.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ang2ToDoItems.Data.Entities\Ang2ToDoItems.Data.Entities.csproj">
       <Project>{bd3cb129-fdfd-4531-b73b-e7e7e62d744d}</Project>
       <Name>Ang2ToDoItems.Data.Entities</Name>

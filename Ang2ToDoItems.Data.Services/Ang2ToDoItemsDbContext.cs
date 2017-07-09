@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Ang2ToDoItems.Data.Entities.Identity;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure.Annotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Ang2ToDoItems.Data.Entities;
 
 namespace Ang2ToDoItems.Data.Services
 {
@@ -13,6 +16,8 @@ namespace Ang2ToDoItems.Data.Services
     {
         public const string ConnectionStringName = "DefaultConnection";
         public DbSet<ClientProfile> ClientProfiles { get; set; }
+        public DbSet<ToDoItem> ToDoItems { get; set; }
+        public DbSet<ToDoItemCategory> ToDoItemCategories { get; set; }
 
         public Ang2ToDoItemsDbContext() :base(ConnectionStringName) { }
 
@@ -21,6 +26,13 @@ namespace Ang2ToDoItems.Data.Services
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.PluralizingTableNameConvention>();
+            modelBuilder.Entity<ApplicationUser>().Property(x => x.Email).HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute() { IsUnique = true }));
+            /*modelBuilder.Entity<ClientProfile>().HasKey(x => x.Id).Property(x => x.Id)
+                .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                .HasMaxLength(126);
+            modelBuilder.Entity<ApplicationUser>().HasOptional(x => x.ClientProfile).WithRequired(x => x.ApplicationUser).
+                Map(x => x.MapKey("Id"));*/
+
             base.OnModelCreating(modelBuilder);
         }
     }

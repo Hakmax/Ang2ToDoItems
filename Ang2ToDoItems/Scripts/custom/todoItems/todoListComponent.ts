@@ -6,6 +6,7 @@ import { DialogService } from "ng2-bootstrap-modal";
 import { Category } from "../categories/models/category";
 import { CategoriesService } from "../categories/services/categoriesService";
 import { UserInfo } from "../shared/models/userInfo";
+import { CommonDialogComponent } from "../shared/commonDialog.component";
 
 declare var module: any;
 declare var $: any;
@@ -19,7 +20,7 @@ export class ToDoItemListComponent {
     toDoItems: ToDoItem[];
     loading: boolean;
     totalItems: number = 0;
-    curPage: number=0;
+    curPage: number = 0;
 
     private categories: Category[];
 
@@ -42,7 +43,7 @@ export class ToDoItemListComponent {
             this.loading = false;
         }, 500);
     }
-    
+
     addNewToDoItem() {
         var newItem = new ToDoItem(null, "", "", "Новый");
         this.showDialog(newItem);
@@ -52,6 +53,28 @@ export class ToDoItemListComponent {
         console.log(event);
         this.curPage = event.page;
         this.loadToDoItems();
+    }
+
+    removeToDoItem(item: ToDoItem) {
+        this.dialogService.addDialog(CommonDialogComponent, {
+            title: "Удаление задачи",
+            text: "Вы действительно хотите удалить задачу?"
+        }, {
+                closeByClickingOutside: true
+            }).subscribe(x => {
+                if (x && x.closedByOkButton) {
+                    this.loading = true;
+                    console.log("delete!");
+                    this.todoItemService.removeToDoItem(item.Id).subscribe(x => {
+                        var index = this.toDoItems.indexOf(item);
+                        if (index > -1) {
+                            this.toDoItems.splice(index, 1);
+                        }
+                        this.loading = false;
+                    });
+                }
+            });
+
     }
 
     private showDialog(item: ToDoItem) {
@@ -85,7 +108,7 @@ export class ToDoItemListComponent {
     private loadToDoItems() {
         this.loading = true;
         setTimeout(() => {
-           
+
             this.todoItemService.getToDoItems({
                 PageSize: 5,
                 PageNumber: this.curPage

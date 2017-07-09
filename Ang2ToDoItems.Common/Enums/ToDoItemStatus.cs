@@ -2,23 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Ang2ToDoItems.Models
+namespace Ang2ToDoItems.Common.Enums
 {
-    public class ToDoItem:ModelWithName<int>
-    {
-        public string Comment { get; set; }
-        public ToDoItemStatus Status { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime? UpdatedOn { get; set; }
-        public int CategoryId { get; set; }
-
-    }
-
     public enum ToDoItemStatus
     {
-        [EnumMember(Value ="Новый")]
+        [EnumMember(Value = "Новый")]
         New,
 
         [EnumMember(Value = "В работе")]

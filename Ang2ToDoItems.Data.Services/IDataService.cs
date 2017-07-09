@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Ang2ToDoItems.Data.Services
 {
-    public interface IDataService<TEntity, in TKey> where TEntity:Entity<TKey>
+    public interface IDataService<TEntity, in TKey> where TEntity:IEntity<TKey>
     {
         IQueryable<TEntity> Set { get; }
         TEntity Get(TKey key, params Expression<Func<TEntity, object>>[] includes);

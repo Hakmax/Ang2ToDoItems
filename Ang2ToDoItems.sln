@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ang2ToDoItems.Models", "Ang
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ang2ToDoItems.Services", "Ang2ToDoItems.Services\Ang2ToDoItems.Services.csproj", "{FAB67971-BC04-49B6-8DE4-A86313C1933B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ang2ToDoItems.Common", "Ang2ToDoItems.Common\Ang2ToDoItems.Common.csproj", "{3C2D8060-24A5-41B5-A5E6-08859ED8D3B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{FAB67971-BC04-49B6-8DE4-A86313C1933B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAB67971-BC04-49B6-8DE4-A86313C1933B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAB67971-BC04-49B6-8DE4-A86313C1933B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C2D8060-24A5-41B5-A5E6-08859ED8D3B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C2D8060-24A5-41B5-A5E6-08859ED8D3B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C2D8060-24A5-41B5-A5E6-08859ED8D3B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C2D8060-24A5-41B5-A5E6-08859ED8D3B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

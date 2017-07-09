@@ -35,6 +35,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,13 +45,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Identity\OperationResult.cs" />
+    <Compile Include="Identity\ClientProfile.cs" />
+    <Compile Include="Identity\RegisterUserModel.cs" />
     <Compile Include="Identity\UserModel.cs" />
     <Compile Include="Identity\UserResponse.cs" />
+    <Compile Include="ModelsMappingConfig.cs" />
+    <Compile Include="ModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Result\RegisterUserResult.cs" />
+    <Compile Include="ToDoItem\ToDoItemCategoryModel.cs" />
+    <Compile Include="ToDoItem\ToDoItemModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ang2ToDoItems.Common\Ang2ToDoItems.Common.csproj">
+      <Project>{3C2D8060-24A5-41B5-A5E6-08859ED8D3B2}</Project>
+      <Name>Ang2ToDoItems.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ang2ToDoItems.Data.Entities\Ang2ToDoItems.Data.Entities.csproj">
+      <Project>{bd3cb129-fdfd-4531-b73b-e7e7e62d744d}</Project>
+      <Name>Ang2ToDoItems.Data.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

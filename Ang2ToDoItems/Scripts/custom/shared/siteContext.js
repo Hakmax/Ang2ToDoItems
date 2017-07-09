@@ -10,13 +10,13 @@ const core_1 = require("@angular/core");
 const rxjs_1 = require("rxjs");
 let SiteContext = class SiteContext {
     constructor() {
-        this._user = new rxjs_1.Subject();
+        this._userContext = new rxjs_1.Subject();
     }
     getUser() {
-        return this._user;
+        return this._userContext;
     }
-    setUser(user) {
-        this._user.next(user);
+    setUser(userContext) {
+        this._userContext.next(userContext);
     }
 };
 SiteContext = __decorate([

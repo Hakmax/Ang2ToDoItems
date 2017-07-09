@@ -16,7 +16,7 @@ namespace Ang2ToDoItems.Helpers
         public readonly string AppDataCategoriesJsonFilePath = HostingEnvironment.MapPath($"~/App_Data/{CategoriesJsonFileName}");
 
 
-        public IList<ToDoItem> LoadToDoItemsFromAppData()
+        /*public IList<ToDoItem> LoadToDoItemsFromAppData()
         {
             var items = new List<ToDoItem>();
             var filePath = AppDataToDoItemsJsonFilePath;
@@ -29,7 +29,7 @@ namespace Ang2ToDoItems.Helpers
                 }
             }
             return items;
-        }
+        }*/
 
         public IList<Category> LoadCategoriesFromAppData()
         {

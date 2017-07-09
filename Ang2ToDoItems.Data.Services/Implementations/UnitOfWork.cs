@@ -71,8 +71,15 @@ namespace Ang2ToDoItems.Data.Services.Implementations
         public int Save()
         {
             int res = 0;
+            try
+            {
+                res = Context.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                int i = 0;
+            }
 
-            res = Context.SaveChanges();
             return res;
         }
 

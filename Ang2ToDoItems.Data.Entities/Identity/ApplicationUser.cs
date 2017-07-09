@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Ang2ToDoItems.Data.Entities.Identity
 {
-    public class ApplicationUser:IdentityUser
+    public class ApplicationUser:IdentityUser, IEntity<string>
     {
     }
+    
 }

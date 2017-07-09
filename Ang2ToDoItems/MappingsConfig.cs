@@ -16,7 +16,7 @@ namespace Ang2ToDoItems
 
         public static void AddMappings(AutoMapper.IMapperConfigurationExpression expr)
         {
-            expr.AddProfile<Models.Api.ToDoItemApiModelProfile>();
+            Ang2ToDoItems.Models.ModelsMappingConfig.AddMappings(expr);
             expr.AddProfile<CategoryMappingProfile>();
         }
     }

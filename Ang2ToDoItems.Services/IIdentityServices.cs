@@ -1,4 +1,5 @@
 ﻿using Ang2ToDoItems.Models.Identity;
+using Ang2ToDoItems.Models.Result;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,10 @@ namespace Ang2ToDoItems.Services
 {
     public interface IUserService:IDisposable
     {
-        Task<OperationResult> CreateUser(UserModel user);
-        Task<ClaimsIdentity> Auth(UserModel user);
+        Task<RegisterUserResult> CreateUser(RegisterUserModel user);
+        Task<ClaimsIdentity> Auth(string userName, string password);
+        ClientProfile GetCientProfile(string userId);
+        void SaveProfile(ClientProfile profile, string userId);
     }
 
     public interface IRoleService

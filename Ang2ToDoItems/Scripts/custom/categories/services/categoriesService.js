@@ -31,6 +31,11 @@ let CategoriesService = class CategoriesService {
             return x.ok;
         });
     }
+    deleteCategory(id) {
+        return this.http.delete(this.CategoriesApiUrl + "?id=" + id).map(x => {
+            return x.ok;
+        });
+    }
 };
 CategoriesService = __decorate([
     core_1.Injectable(),

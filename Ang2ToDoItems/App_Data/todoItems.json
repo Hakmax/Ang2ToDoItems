@@ -5,6 +5,7 @@
     "CreatedOn": "0001-01-01T00:00:00",
     "UpdatedOn": "2017-05-31T14:19:10.7948786+03:00",
     "CategoryId": 3,
+    "UserId": null,
     "Name": "5655",
     "Id": 1
   },
@@ -14,6 +15,7 @@
     "CreatedOn": "0001-01-01T00:00:00",
     "UpdatedOn": null,
     "CategoryId": 2,
+    "UserId": null,
     "Name": "Test2",
     "Id": 2
   },
@@ -23,6 +25,7 @@
     "CreatedOn": "0001-01-01T00:00:00",
     "UpdatedOn": null,
     "CategoryId": 3,
+    "UserId": null,
     "Name": "new Item",
     "Id": 0
   },
@@ -32,6 +35,7 @@
     "CreatedOn": "0001-01-01T00:00:00",
     "UpdatedOn": "2017-05-27T19:14:42.0656645+03:00",
     "CategoryId": 4,
+    "UserId": null,
     "Name": "новый элемент11",
     "Id": 4
   },
@@ -41,6 +45,7 @@
     "CreatedOn": "0001-01-01T00:00:00",
     "UpdatedOn": null,
     "CategoryId": 3,
+    "UserId": null,
     "Name": "new Item",
     "Id": 5
   },
@@ -50,6 +55,7 @@
     "CreatedOn": "0001-01-01T00:00:00",
     "UpdatedOn": "2017-05-30T15:08:19.4700898+03:00",
     "CategoryId": 4,
+    "UserId": null,
     "Name": "787",
     "Id": 6
   },
@@ -59,7 +65,38 @@
     "CreatedOn": "0001-01-01T00:00:00",
     "UpdatedOn": "2017-05-30T21:34:32.361956+03:00",
     "CategoryId": 6,
+    "UserId": null,
     "Name": "новая задача",
     "Id": 7
+  },
+  {
+    "Comment": "",
+    "Status": 0,
+    "CreatedOn": "0001-01-01T00:00:00",
+    "UpdatedOn": "2017-06-25T20:57:12.0940454+03:00",
+    "CategoryId": 0,
+    "UserId": null,
+    "Name": "new item56",
+    "Id": 8
+  },
+  {
+    "Comment": "олрлор",
+    "Status": 0,
+    "CreatedOn": "0001-01-01T00:00:00",
+    "UpdatedOn": "2017-06-25T21:00:29.297202+03:00",
+    "CategoryId": 0,
+    "UserId": "bf1884cb-82db-4524-8b4d-9087fcb9436b",
+    "Name": "еуые8989",
+    "Id": 9
+  },
+  {
+    "Comment": "",
+    "Status": 0,
+    "CreatedOn": "0001-01-01T00:00:00",
+    "UpdatedOn": null,
+    "CategoryId": 0,
+    "UserId": "bf1884cb-82db-4524-8b4d-9087fcb9436b",
+    "Name": "new",
+    "Id": 10
   }
 ]

@@ -28,4 +28,10 @@ export class CategoriesService {
             return x.ok;
         });
     }
+
+    deleteCategory(id: number): Observable<boolean> {
+        return this.http.delete(this.CategoriesApiUrl + "?id=" + id).map(x => {
+            return x.ok;
+        });
+    }
 }

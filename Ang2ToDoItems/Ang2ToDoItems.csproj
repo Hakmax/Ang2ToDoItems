@@ -196,14 +196,8 @@
     </Compile>
     <Compile Include="Helpers\SiteJsonDataHelper.cs" />
     <Compile Include="MappingsConfig.cs" />
-    <Compile Include="Models\Api\ToDoItemApiModel.cs" />
     <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\ListResponse.cs" />
     <Compile Include="Models\LoginModel.cs" />
-    <Compile Include="Models\ModelWithId.cs" />
-    <Compile Include="Models\PageListRequest.cs" />
-    <Compile Include="Models\RegisterModel.cs" />
-    <Compile Include="Models\ToDoItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -216,16 +210,21 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\15.gif" />
+    <Content Include="Images\785.gif" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="package.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\custom\auth\authModal.component.html" />
     <Content Include="Scripts\custom\categories\editCategoryModal.component.html" />
     <Content Include="Scripts\custom\auth\userInfo.component.html" />
+    <Content Include="Scripts\custom\shared\commonDialog.component.html" />
     <Content Include="Scripts\custom\systemjs.config.js" />
     <Content Include="Scripts\custom\categories\categories.component.html" />
     <Content Include="Scripts\custom\todoItems\editToDoItemModal2.component.html" />
     <Content Include="Scripts\custom\todoItems\todoList.component.html" />
+    <Content Include="Scripts\custom\user\registerUser.component.html" />
+    <Content Include="Scripts\custom\user\userProfile.component.html" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -256,6 +255,7 @@
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\UserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Mappings\" />
@@ -277,9 +277,11 @@
     <TypeScriptCompile Include="Scripts\custom\common.module.ts" />
     <TypeScriptCompile Include="Scripts\custom\main.ts" />
     <TypeScriptCompile Include="Scripts\custom\auth\authModal.component.ts" />
+    <TypeScriptCompile Include="Scripts\custom\shared\commonDialog.component.ts" />
     <TypeScriptCompile Include="Scripts\custom\shared\models\appOptions.ts" />
     <TypeScriptCompile Include="Scripts\custom\shared\models\paging.ts" />
     <TypeScriptCompile Include="Scripts\custom\shared\models\userInfo.ts" />
+    <TypeScriptCompile Include="Scripts\custom\shared\services\commonServices.ts" />
     <TypeScriptCompile Include="Scripts\custom\shared\services\dependencyService.ts" />
     <TypeScriptCompile Include="Scripts\custom\shared\services\guardService.ts" />
     <TypeScriptCompile Include="Scripts\custom\shared\services\userInfoService.ts" />
@@ -294,11 +296,22 @@
     <TypeScriptCompile Include="Scripts\custom\categories\services\categoriesService.ts" />
     <TypeScriptCompile Include="Scripts\custom\todoItems\services\todoItemService.ts" />
     <TypeScriptCompile Include="Scripts\custom\todoItems\todoListComponent.ts" />
+    <TypeScriptCompile Include="Scripts\custom\user\authGuard.ts" />
+    <TypeScriptCompile Include="Scripts\custom\user\models\registerUserModel.ts" />
+    <TypeScriptCompile Include="Scripts\custom\user\models\userProfile.ts" />
+    <TypeScriptCompile Include="Scripts\custom\user\registerGuard.ts" />
+    <TypeScriptCompile Include="Scripts\custom\user\registerUser.component.ts" />
+    <TypeScriptCompile Include="Scripts\custom\user\services\userService.ts" />
+    <TypeScriptCompile Include="Scripts\custom\user\userProfile.component.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Ang2ToDoItems.Common\Ang2ToDoItems.Common.csproj">
+      <Project>{3C2D8060-24A5-41B5-A5E6-08859ED8D3B2}</Project>
+      <Name>Ang2ToDoItems.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ang2ToDoItems.Data.Entities\Ang2ToDoItems.Data.Entities.csproj">
       <Project>{bd3cb129-fdfd-4531-b73b-e7e7e62d744d}</Project>
       <Name>Ang2ToDoItems.Data.Entities</Name>

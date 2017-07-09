@@ -1,41 +1,54 @@
 ﻿import { Component } from "@angular/core";
-import { UserInfo } from "../shared/models/userInfo";
+import { UserInfo, UserContext } from "../shared/models/userInfo";
 import { UserInfoService } from "../shared/services/userInfoService";
-import {CategoriesModule } from "../categories/categories.module";
+import { CategoriesModule } from "../categories/categories.module";
+import { SiteContext } from "../shared/siteContext";
+import { AuthModalComponent } from "./authModal.component";
+import { DialogService } from "ng2-bootstrap-modal";
 
 declare var module: any;
 @Component({
-    moduleId:module.id,
+    moduleId: module.id,
     selector: "userInfo",
-    templateUrl:"userInfo.component.html"
+    templateUrl: "userInfo.component.html"
 })
 export class UserInfoComponent {
-    userInfo: UserInfo;
+    userInfo: UserContext;
 
-    constructor(private _userInfoService: UserInfoService) {
-        this.userInfo = this.loadInfo();
-        
-        if (!this.userInfo)
-            this.userInfo = new UserInfo();
-        this.userInfo.Name = "name";
-        this.userInfo.Token = "token";
-
-        this._userInfoService.getUser().subscribe(x => {
-            console.log("userInfo.component", x);
+    constructor(private _userInfoService: UserInfoService, private _siteContext: SiteContext, private _dialogService: DialogService) {
+        this.loadInfo();
+        this._siteContext.getUser().subscribe(x => {
             this.userInfo = x;
         });
     }
 
-    changeUser() {
-        this._userInfoService.change();
+    private loadInfo() {
+        this._userInfoService.getUser().subscribe(x => {
+            console.log("userInfo.component", x);
+            var cntx = new UserContext();
+            cntx.Loaded = true;
+            cntx.User = x;
+            setTimeout(x => {
+                this._siteContext.setUser(cntx);
+            }, 2000);
+        });
     }
 
-    ngOnInit() {
-        console.log("init");
+    logout() {
+        this._userInfoService.logout().subscribe(x => {
+            if (x) {
+                this._siteContext.setUser(null);
+
+            }
+        });
     }
 
-    private loadInfo(): UserInfo {
-        var info = this._userInfoService.getCookieUserInfo();
-        return info;
+    showAuthModal() {
+        this._dialogService.addDialog(AuthModalComponent, null,
+            {
+                closeByClickingOutside: true
+            }).subscribe(x => {
+                console.log(x);
+            });
     }
 }
