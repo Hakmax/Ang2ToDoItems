@@ -1,6 +1,9 @@
 {
   "name": "ang2-todoitems",
   "version": "0.0.1",
+  "devDependencies": {
+    "@types/node": "~8.0.14"
+  },
   "dependencies": {
     "@angular/common": "2.4.10",
     "@angular/compiler": "2.4.10",

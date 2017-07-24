@@ -179,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiControllers\CategoryController.cs" />
+    <Compile Include="ApiControllers\RoleController.cs" />
     <Compile Include="ApiControllers\ToDoItemController.cs" />
     <Compile Include="ApiControllers\UserController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\ToDoItemController.cs" />
     <Compile Include="DependencyConfig.cs" />
     <Compile Include="Global.asax.cs">
@@ -215,6 +217,8 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="package.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\custom\admin\roles\edit-role.modal.component.html" />
+    <Content Include="Scripts\custom\admin\roles\roles.component.html" />
     <Content Include="Scripts\custom\auth\authModal.component.html" />
     <Content Include="Scripts\custom\categories\editCategoryModal.component.html" />
     <Content Include="Scripts\custom\auth\userInfo.component.html" />
@@ -256,6 +260,7 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\UserProfile.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Mappings\" />
@@ -269,9 +274,16 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\custom\admin\admin-routing.module.ts" />
+    <TypeScriptCompile Include="Scripts\custom\admin\admin.module.ts" />
+    <TypeScriptCompile Include="Scripts\custom\admin\models\role.ts" />
+    <TypeScriptCompile Include="Scripts\custom\admin\roles\edit-role.modal.component.ts" />
+    <TypeScriptCompile Include="Scripts\custom\admin\roles\roles.component.ts" />
+    <TypeScriptCompile Include="Scripts\custom\admin\roles\services\roles.service.ts" />
     <TypeScriptCompile Include="Scripts\custom\app.component.ts" />
     <TypeScriptCompile Include="Scripts\custom\app.module.ts" />
     <TypeScriptCompile Include="Scripts\custom\auth\auth.module.ts" />
+    <TypeScriptCompile Include="Scripts\custom\categories\categories-routing.module.ts" />
     <TypeScriptCompile Include="Scripts\custom\categories\categories.module.ts" />
     <TypeScriptCompile Include="Scripts\custom\categories\editCategoryModal.component.ts" />
     <TypeScriptCompile Include="Scripts\custom\common.module.ts" />
@@ -302,6 +314,8 @@
     <TypeScriptCompile Include="Scripts\custom\user\registerGuard.ts" />
     <TypeScriptCompile Include="Scripts\custom\user\registerUser.component.ts" />
     <TypeScriptCompile Include="Scripts\custom\user\services\userService.ts" />
+    <TypeScriptCompile Include="Scripts\custom\user\user-routing.module.ts" />
+    <TypeScriptCompile Include="Scripts\custom\user\user.module.ts" />
     <TypeScriptCompile Include="Scripts\custom\user\userProfile.component.ts" />
   </ItemGroup>
   <ItemGroup>

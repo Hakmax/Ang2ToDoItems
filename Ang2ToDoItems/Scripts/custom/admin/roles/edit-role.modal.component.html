@@ -1,0 +1,20 @@
+﻿<div class="modal-dialog">
+    <form #form="ngForm" class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" (click)="close()">&times;</button>
+            <h1>Роль</h1>
+        </div>
+
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="control-label">Name</label>
+                <input type="text" required class="form-control" [(ngModel)]="role.Name" name="name" #name="ngModel"/>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-primary" (click)="okClicked()" [disabled]="!form.valid">OK</button>
+            <a class="btn btn-default" (click)="close()">Отмена</a>
+        </div>
+    </form>
+</div>

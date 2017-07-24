@@ -3,9 +3,6 @@ import { Category } from "./models/category";
 import { DialogService, DialogComponent } from "ng2-bootstrap-modal";
 import { FormsModule, NgForm } from "@angular/forms";
 
-declare var module: any;
-declare var _: any;
-
 export interface IEditCategoryModel {
     category: Category;
 }

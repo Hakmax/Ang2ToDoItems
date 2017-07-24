@@ -1,4 +1,5 @@
 ﻿using Ang2ToDoItems.Models.Identity;
+using Ang2ToDoItems.Models.Identity.Management;
 using Ang2ToDoItems.Models.ToDoItem;
 using AutoMapper;
 using System;
@@ -21,6 +22,7 @@ namespace Ang2ToDoItems.Models
             config.AddProfile<ClientProfileMappingProfile>();
             config.AddProfile<ToDoItemCategoryModelMappingProfile>();
             config.AddProfile<ToDoItemModelMappingProfile>();
+            config.AddProfile<RoleMappingProfile>();
         }
     }
 }

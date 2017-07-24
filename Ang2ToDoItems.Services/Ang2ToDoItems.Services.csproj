@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Identity\RoleService.cs" />
     <Compile Include="IIdentityServices.cs" />
     <Compile Include="Identity\UserService.cs" />
     <Compile Include="Implementations\ToDoItemService.cs" />

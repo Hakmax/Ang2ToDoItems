@@ -10,7 +10,6 @@ export interface ConfirmModel {
     categories: Category[];
 }
 
-declare var module: any;
 @Component({
     moduleId: module.id,
     selector: "editToDoItem2",

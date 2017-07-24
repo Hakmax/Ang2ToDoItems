@@ -4,7 +4,6 @@ import { FormsModule, NgForm } from "@angular/forms";
 import { UserService } from "./services/userService";
 import { ErrorService } from "../shared/services/commonServices";
 
-declare var module: any;
 @Component({
     moduleId: module.id,
     selector: "register-user",

@@ -5,7 +5,7 @@ import { UserInfoService } from "../shared/services/userInfoService";
 import { Observable } from "rxjs/Observable";
 
 
-declare var module: any;
+//declare var module: any;
 
 export interface IAuthModel {
     success: boolean;

@@ -6,7 +6,6 @@ import { SiteContext } from "../shared/siteContext";
 import { AuthModalComponent } from "./authModal.component";
 import { DialogService } from "ng2-bootstrap-modal";
 
-declare var module: any;
 @Component({
     moduleId: module.id,
     selector: "userInfo",

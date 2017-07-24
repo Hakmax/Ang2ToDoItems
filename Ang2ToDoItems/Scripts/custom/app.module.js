@@ -17,24 +17,17 @@ const router_1 = require("@angular/router");
 const platform_browser_dynamic_1 = require("@angular/platform-browser-dynamic");
 const common_module_1 = require("./common.module");
 const dependencyService_1 = require("./shared/services/dependencyService");
-const registerUser_component_1 = require("./user/registerUser.component");
-const forms_1 = require("@angular/forms");
-const userService_1 = require("./user/services/userService");
-const registerGuard_1 = require("./user/registerGuard");
-const authGuard_1 = require("./user/authGuard");
-const userProfile_component_1 = require("./user/userProfile.component");
 const ng2_bootstrap_modal_1 = require("ng2-bootstrap-modal");
 const commonDialog_component_1 = require("./shared/commonDialog.component");
+const user_module_1 = require("./user/user.module");
+const admin_module_1 = require("./admin/admin.module");
 let CustomScriptsPath = "Scripts/custom/";
-console.log(module);
 var platform = platform_browser_dynamic_1.platformBrowserDynamic();
 let inj;
 var routes = [
     { path: "categories", loadChildren: CustomScriptsPath + "categories/categories.module#CategoriesModule" },
     { path: "categories/:mode/:id", loadChildren: CustomScriptsPath + "categories/categories.module#CategoriesModule" },
-    { path: "todoitem", loadChildren: CustomScriptsPath + "todoItems/todoItems.module#ToDoItemsModule" },
-    { path: "Account/Register", component: registerUser_component_1.RegisterUserComponent, canActivate: [registerGuard_1.RegisterGuard] },
-    { path: "Account/UserProfile", component: userProfile_component_1.UserProfileComponent, canActivate: [authGuard_1.AuthGuard] }
+    { path: "todoitem", loadChildren: CustomScriptsPath + "todoItems/todoItems.module#ToDoItemsModule" }
 ];
 let AppModule = class AppModule {
     constructor(_injector) {
@@ -45,11 +38,10 @@ let AppModule = class AppModule {
 };
 AppModule = __decorate([
     core_1.NgModule({
-        imports: [platform_browser_1.BrowserModule, shared_module_1.SharedModule, router_1.RouterModule.forRoot(routes), common_module_1.CommonModule.forRoot(), forms_1.FormsModule,
-            ng2_bootstrap_modal_1.BootstrapModalModule.forRoot({ container: document.body })],
-        declarations: [app_component_1.AppComponent, registerUser_component_1.RegisterUserComponent, userProfile_component_1.UserProfileComponent, commonDialog_component_1.CommonDialogComponent],
+        imports: [platform_browser_1.BrowserModule, shared_module_1.SharedModule, router_1.RouterModule.forRoot(routes), common_module_1.CommonModule.forRoot(),
+            ng2_bootstrap_modal_1.BootstrapModalModule.forRoot({ container: document.body }), user_module_1.UserModule, admin_module_1.AdminModule],
+        declarations: [app_component_1.AppComponent, commonDialog_component_1.CommonDialogComponent],
         bootstrap: [app_component_1.AppComponent],
-        providers: [userService_1.UserService, registerGuard_1.RegisterGuard, authGuard_1.AuthGuard],
         entryComponents: [commonDialog_component_1.CommonDialogComponent]
     }),
     __metadata("design:paramtypes", [core_1.Injector])

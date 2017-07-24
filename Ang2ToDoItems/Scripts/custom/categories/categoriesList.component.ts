@@ -13,7 +13,6 @@ enum CategoriesViewMode {
     Edit
 }
 
-declare var module: any;
 declare var _: any;
 @Component({
     moduleId: module.id,
@@ -30,6 +29,7 @@ export class CategoriesListComponent {
     constructor(private categoriesService: CategoriesService, private dialogService: DialogService,
         private _siteContext: SiteContext, private _changeDetector: ChangeDetectorRef, private _router: Router,
         private _activatedRoute: ActivatedRoute) {
+        console.log("constructor");
         if (_activatedRoute.snapshot.params["mode"] == "edit") {
             this._currentMode = CategoriesViewMode.Edit;
             this._editedId = _activatedRoute.snapshot.params["id"];
@@ -63,6 +63,7 @@ export class CategoriesListComponent {
     }
 
     editCategory(category: Category) {
+        this._router.navigate(["categories/edit/" + category.Id]);
         this.showDialogForCategory(_.cloneDeep(category));
     }
 

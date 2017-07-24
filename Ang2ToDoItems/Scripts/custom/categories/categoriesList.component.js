@@ -30,6 +30,7 @@ let CategoriesListComponent = class CategoriesListComponent {
         this._changeDetector = _changeDetector;
         this._router = _router;
         this._activatedRoute = _activatedRoute;
+        console.log("constructor");
         if (_activatedRoute.snapshot.params["mode"] == "edit") {
             this._currentMode = CategoriesViewMode.Edit;
             this._editedId = _activatedRoute.snapshot.params["id"];
@@ -61,6 +62,7 @@ let CategoriesListComponent = class CategoriesListComponent {
         });
     }
     editCategory(category) {
+        this._router.navigate(["categories/edit/" + category.Id]);
         this.showDialogForCategory(_.cloneDeep(category));
     }
     showDialogForCategory(category) {

@@ -8,7 +8,6 @@ import { CategoriesService } from "../categories/services/categoriesService";
 import { UserInfo } from "../shared/models/userInfo";
 import { CommonDialogComponent } from "../shared/commonDialog.component";
 
-declare var module: any;
 declare var $: any;
 declare var _: any;
 @Component({

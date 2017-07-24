@@ -12,16 +12,28 @@ using Ang2ToDoItems.Data.Entities;
 
 namespace Ang2ToDoItems.Data.Services
 {
-    public class Ang2ToDoItemsDbContext:IdentityDbContext<ApplicationUser>
+    public interface IIdentityDbContext
+    {
+        IDbSet<IdentityRole> Roles { get; set; }
+        IDbSet<ApplicationUser> Users { get; set; }
+    }
+
+    public class Ang2ToDoItemsDbContext : IdentityDbContext<ApplicationUser>, IIdentityDbContext
     {
         public const string ConnectionStringName = "DefaultConnection";
         public DbSet<ClientProfile> ClientProfiles { get; set; }
         public DbSet<ToDoItem> ToDoItems { get; set; }
         public DbSet<ToDoItemCategory> ToDoItemCategories { get; set; }
 
-        public Ang2ToDoItemsDbContext() :base(ConnectionStringName) { }
+        public Ang2ToDoItemsDbContext() : base(ConnectionStringName)
+        {
 
-        public Ang2ToDoItemsDbContext(string connectionString) : base(connectionString) { }
+        }
+
+        public Ang2ToDoItemsDbContext(string connectionString) : base(connectionString)
+        {
+
+        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

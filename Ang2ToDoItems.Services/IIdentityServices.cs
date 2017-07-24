@@ -1,4 +1,5 @@
 ﻿using Ang2ToDoItems.Models.Identity;
+using Ang2ToDoItems.Models.Identity.Management;
 using Ang2ToDoItems.Models.Result;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,9 @@ namespace Ang2ToDoItems.Services
 
     public interface IRoleService
     {
-        void CreateRole(string roleName);
+        void CreateRole(Role role);
+        void UpdateRole(Role role);
+        IList<Role> GetRoles();
     }
     
 }

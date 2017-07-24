@@ -14,15 +14,16 @@ using System.Web;
 
 namespace Ang2ToDoItems.Data.Services
 {
-    public class DataServicesModule:Module
+    public class DataServicesModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
             Database.SetInitializer(new System.Data.Entity.MigrateDatabaseToLatestVersion<Ang2ToDoItemsDbContext,
                 Migrations.Configuration>(Ang2ToDoItemsDbContext.ConnectionStringName));
-            builder.RegisterType<Ang2ToDoItemsDbContext>().AsSelf()/*.As<IdentityDbContext<ApplicationUser>>()*/.InstancePerLifetimeScope().PropertiesAutowired();
-            builder.Register(x=>new UserStore<ApplicationUser>(x.Resolve<Ang2ToDoItemsDbContext>())).AsImplementedInterfaces().PropertiesAutowired().InstancePerLifetimeScope();
-            builder.Register(x=>new RoleStore<ApplicationRole>(x.Resolve<Ang2ToDoItemsDbContext>())).AsImplementedInterfaces().PropertiesAutowired().InstancePerLifetimeScope();
+            //builder.RegisterType<Ang2ToDoItemsDbContext>().As<IIdentityDbContext>().PropertiesAutowired().InstancePerLifetimeScope();
+            builder.RegisterType<Ang2ToDoItemsDbContext>().AsSelf()/*.As<IIdentityDbContext>()*/.InstancePerLifetimeScope().PropertiesAutowired();
+            builder.Register(x => new UserStore<ApplicationUser>(x.Resolve<Ang2ToDoItemsDbContext>())).AsImplementedInterfaces().PropertiesAutowired().InstancePerLifetimeScope();
+            builder.Register(x => new RoleStore<ApplicationRole>(x.Resolve<Ang2ToDoItemsDbContext>())).AsImplementedInterfaces().PropertiesAutowired().InstancePerLifetimeScope();
 
             builder.Register<IdentityFactoryOptions<ApplicationUserManager>>(c => new IdentityFactoryOptions<ApplicationUserManager>
             { DataProtectionProvider = new Microsoft.Owin.Security.DataProtection.DpapiDataProtectionPr‌​ovider("Ang2ToDoItems") });
@@ -32,6 +33,7 @@ namespace Ang2ToDoItems.Data.Services
             builder.RegisterType<ApplicationRoleManager>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired();
 
             builder.RegisterAssemblyTypes(ThisAssembly).AsImplementedInterfaces().PropertiesAutowired().InstancePerLifetimeScope();
+            //builder.Register(.As<IIdentityDbContext>().InstancePerLifetimeScope().PropertiesAutowired();
             base.Load(builder);
         }
     }

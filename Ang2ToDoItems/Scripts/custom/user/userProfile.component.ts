@@ -3,7 +3,6 @@ import { UserService } from "./services/userService";
 import { UserProfile } from "./models/userProfile";
 import { FormsModule } from "@angular/forms";
 
-declare var module: any;
 @Component({
     moduleId: module.id,
     templateUrl: "userProfile.component.html"
